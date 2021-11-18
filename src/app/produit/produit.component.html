@@ -1,0 +1,52 @@
+<div class="row">
+  <div *ngIf="quantite!==0" class="col-md-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="text-center" scope="col">Produit</th>
+          <th class="text-center" scope="col">Photo</th>
+          <th class="text-center" scope="col">Contenance</th>
+          <th class="text-center" scope="col">Prix</th>
+          <th class="text-center" scope="col">Quantité</th>
+          <th class="text-center" scope="col">Supprimer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let parfum of panier">
+          <th class="text-center" scope="row">{{parfum.nom}}</th>
+          <td class="text-center"><img width=50 src="{{ parfum.photo }}" alt=""></td>
+          <td class="text-center">{{ parfum.contenance }} ml</td>
+          <td class="text-center">{{ parfum.prix }} € </td>
+          <td class="text-center">{{ parfum.quantite }} </td>
+          <td class="text-center"><button (click)="retraitPanier(parfum.nom)" class="btn btn-danger">X</button></td>
+
+        </tr>
+        <tr>
+      </tbody>
+    </table>
+    <p class="text-end">Total: <strong>{{ total() | currency: 'EUR' }}</strong></p>
+  </div>
+  <div [class.col]="quantite==0"
+       [class.col-md-8]="quantite!==0">
+    <div class="row justify-content-around">
+      <div *ngFor="let produit of produits" class="card col-md-3 mb-3 ps-0 pe-0" style="width: 18rem;">
+          <div class="card col-md-3" style="width: 18rem;">
+            <div class="card-header bg-dark text-white">
+              <h4>{{ produit.marque }}</h4>
+            </div>
+              <img src="{{ produit.photo }}" class="card-img-top" alt="photo {{ produit.nom }}">
+              <div class="card-body">
+              <h5 class="card-title text-center">{{ produit.nom }}</h5>
+              <div>
+                <h4>{{ produit.prix }} €</h4>
+
+              </div>
+
+              <app-detail [cont]="produit.contenance" [desc]="produit.description"></app-detail>
+              <a href="#" (click)="ajoutPanier(produit, produit.nom)" class="btn btn-primary">Ajouter au panier</a>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
